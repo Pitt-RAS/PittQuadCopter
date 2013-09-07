@@ -7,15 +7,14 @@
 // BO1 - Connect to the negative lead of motor B.
 // VMOT - Connect to the positive side of the power source you are using to power the motors.
 // GND - Connect to the negative side of the power source you are using to power the motors.
-// PWMA - Connect to PWM pin on the Arduino.  On the Arduino Uno, this would be either pin 3,5,6,9,10,or 11.
-// AIN2 - Connect to a digital pin on the Arduino.
-// AIN1 - Connect to a digital pin on the Arduino.
-// STBY - Connect to a digital pin on the Arduino.
-// BIN1 - Connect to a digital pin on the Arduino.
-// BIN2 - Connect to a digital pin on the Arduino.
-// PWMB - Connect to a PWM pin on the Arduino.  On the Arduino Uno, this would be either pin 3,5,6,9,10,or 11.
+// PWMA - Connect to PWM pin on the Arduino.  On the Arduino Uno digital pin 3
+// AIN1 - Connect to digital pin 9 on the Arduino.
+// AIN2 - Connect to digital pin 8 on the Arduino.
+// STBY - Connect to digital pin 10 on the Arduino.
+// BIN1 - Connect to digital pin 11 on the Arduino.
+// BIN2 - Connect to digital pin 12 on the Arduino.
+// PWMB - Connect to PWM pin on the Arduino.  On the Arduino Uno, digital pin 5
 // GND - Connect to the ground of the Arduino.
-
 //motor A connected between A01 and A02
 //motor B connected between B01 and B02
 
