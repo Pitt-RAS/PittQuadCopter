@@ -25,52 +25,59 @@ unsigned long  delta_t;
 int posArray[] ={};		//store the gyroscope and accelerometer value
 
 void setup() {
-	// setup 6DOF
-	analogReference(EXTERNAL);     //using external analog ref of 3.3V for ADC scaling
-	Serial.begin(115200);          //setup serial
-  	DDRC = B00000000;              //make all analog ports as inputs (for arduino uno)
+  // setup 6DOF
+  analogReference(EXTERNAL);     //using external analog ref of 3.3V for ADC scaling
+  Serial.begin(115200);          //setup serial
+  DDRC = B00000000;              //make all analog ports as inputs (for arduino uno)
 
-  	delay (100); //dealy just in case - to get things stabilized if need be....
- 
- 	// Serial.println("t[ms] \t gy \t gx \t gz \t az \t ay \t ax "); //print data header
+  delay (100); //dealy just in case - to get things stabilized if need be....
 
- 	timer=millis();
+  Serial.println("t[ms] \t gy \t gx \t gz \t az \t ay \t ax "); //print data header
 
-  	// setup TB6612FNG
-  	pinMode(STBY, OUTPUT);
-  	// setup motor A
-	pinMode(PWMA, OUTPUT);
-	pinMode(AIN1, OUTPUT);
-	pinMode(AIN2, OUTPUT);
-	// setup motor B
-	pinMode(PWMB, OUTPUT);
-	pinMode(BIN1, OUTPUT);
-	pinMode(BIN2, OUTPUT);
-	// setup motor D
-	pinMode(PWMC, OUTPUT);
-	pinMode(CIN1, OUTPUT);
-	pinMode(CIN2, OUTPUT);
-	// setup motor C
-	pinMode(PWMD, OUTPUT);
-	pinMode(DIN1, OUTPUT);
-	pinMode(DIN2, OUTPUT);
+  timer=millis();
+
+  // setup TB6612FNG
+  pinMode(STBY, OUTPUT);
+  // setup motor A
+  pinMode(PWMA, OUTPUT);
+  pinMode(AIN1, OUTPUT);
+  pinMode(AIN2, OUTPUT);
+  // setup motor B
+  pinMode(PWMB, OUTPUT);
+  pinMode(BIN1, OUTPUT);
+  pinMode(BIN2, OUTPUT);
+  // setup motor D
+  pinMode(PWMC, OUTPUT);
+  pinMode(CIN1, OUTPUT);
+  pinMode(CIN2, OUTPUT);
+  // setup motor C
+  pinMode(PWMD, OUTPUT);
+  pinMode(DIN1, OUTPUT);
+  pinMode(DIN2, OUTPUT);
 }
 
 void loop() {
-	for (long i=0; i<6; i++) { 
-		val[i] = analogRead(i);    // read the input pin
-  		Serial.print(val);      //print data
-  		Serial.print ("\t");
- 	}  
+  delta_t = millis() - timer; // calculate time through loop i.e. acq. rate
+  timer=millis(); // reset timer
+  Serial.print(delta_t);
+  Serial.print ("\t");
 
-  
+  for (long i=0; i<6; i++) //read gyroscope and accelerometer sensor data
+  {
+    val = analogRead(i); // read the input pin
+    Serial.print(val); //print data
+    Serial.print ("\t");
+  }
+
+  Serial.println("");
+  delay(1500);
 }
 
 void move(int motor, int speed, int direction){
-//Move specific motor at speed and direction
-//motor: 0 for B 1 for A
-//speed: 0 is off, and 255 is full speed
-//direction: 0 clockwise, 1 counter-clockwise
+  //Move specific motor at speed and direction
+  //motor: 0 for B 1 for A
+  //speed: 0 is off, and 255 is full speed
+  //direction: 0 clockwise, 1 counter-clockwise
 
   digitalWrite(STBY, HIGH); //disable standby
 
@@ -86,7 +93,8 @@ void move(int motor, int speed, int direction){
     digitalWrite(AIN1, inPin1);
     digitalWrite(AIN2, inPin2);
     analogWrite(PWMA, speed);
-  }else{
+  }
+  else{
     digitalWrite(BIN1, inPin1);
     digitalWrite(BIN2, inPin2);
     analogWrite(PWMB, speed);
@@ -94,6 +102,7 @@ void move(int motor, int speed, int direction){
 }
 
 void stop(){
-//enable standby  
+  //enable standby  
   digitalWrite(STBY, LOW); 
 }
+
